@@ -1,0 +1,139 @@
+syntax = "proto3";
+
+package pet_store;
+
+// --- Customers ---
+
+message Customer {
+    int32 id = 1;
+    string name = 2;
+    string email = 3;
+    string phone = 4;
+    string address = 5;
+    string created_at = 6;
+}
+
+message CustomerID {
+    int32 id = 1;
+}
+
+message CustomerCreateRequest {
+    string name = 1;
+    string email = 2;
+    string phone = 3;
+    string address = 4;
+}
+
+message CustomerUpdateRequest {
+    int32 id = 1;
+    string name = 2;
+    string email = 3;
+    string phone = 4;
+    string address = 5;
+}
+
+message Empty {}
+
+message CustomerListResponse {
+    repeated Customer customers = 1;
+}
+
+message SuccessResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+// --- Products ---
+
+message Product {
+    int32 id = 1;
+    string name = 2;
+    string category = 3;
+    float price = 4;
+    int32 stock = 5;
+    string description = 6;
+}
+
+message ProductID {
+    int32 id = 1;
+}
+
+message ProductCreateRequest {
+    string name = 1;
+    string category = 2;
+    float price = 3;
+    int32 stock = 4;
+    string description = 5;
+}
+
+message ProductUpdateRequest {
+    int32 id = 1;
+    string name = 2;
+    string category = 3;
+    float price = 4;
+    int32 stock = 5;
+    string description = 6;
+}
+
+message ProductListResponse {
+    repeated Product products = 1;
+}
+
+// --- Bills ---
+
+message BillItem {
+    int32 product_id = 1;
+    int32 quantity = 2;
+    float unit_price = 3;
+    float subtotal = 4;
+    string product_name = 5; // To match REST API payload behavior optionally
+}
+
+message Bill {
+    int32 id = 1;
+    int32 customer_id = 2;
+    string date = 3;
+    float total_amount = 4;
+    repeated BillItem items = 5;
+}
+
+message BillID {
+    int32 id = 1;
+}
+
+message BillItemInput {
+    int32 product_id = 1;
+    int32 quantity = 2;
+}
+
+message BillCreateRequest {
+    int32 customer_id = 1;
+    repeated BillItemInput items = 2;
+}
+
+message BillListResponse {
+    repeated Bill bills = 1;
+}
+
+// --- Service Definition ---
+
+service PetStoreService {
+    // Customers
+    rpc GetCustomers(Empty) returns (CustomerListResponse);
+    rpc GetCustomer(CustomerID) returns (Customer);
+    rpc CreateCustomer(CustomerCreateRequest) returns (Customer);
+    rpc UpdateCustomer(CustomerUpdateRequest) returns (Customer);
+    rpc DeleteCustomer(CustomerID) returns (SuccessResponse);
+
+    // Products
+    rpc GetProducts(Empty) returns (ProductListResponse);
+    rpc GetProduct(ProductID) returns (Product);
+    rpc CreateProduct(ProductCreateRequest) returns (Product);
+    rpc UpdateProduct(ProductUpdateRequest) returns (Product);
+    rpc DeleteProduct(ProductID) returns (SuccessResponse);
+
+    // Bills
+    rpc GetBills(Empty) returns (BillListResponse);
+    rpc GetBill(BillID) returns (Bill);
+    rpc CreateBill(BillCreateRequest) returns (Bill);
+}

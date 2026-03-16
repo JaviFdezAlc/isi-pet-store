@@ -1,0 +1,89 @@
+type Customer {
+  id: ID!
+  name: String!
+  email: String!
+  phone: String
+  address: String
+  created_at: String
+}
+
+type Product {
+  id: ID!
+  name: String!
+  category: String!
+  price: Float!
+  stock: Int
+  description: String
+}
+
+type BillItem {
+  id: ID!
+  bill_id: ID!
+  product_id: ID!
+  quantity: Int!
+  unit_price: Float!
+  subtotal: Float!
+  product: Product
+}
+
+type Bill {
+  id: ID!
+  customer_id: ID!
+  date: String
+  total_amount: Float!
+  customer: Customer
+  items: [BillItem]!
+}
+
+type Query {
+  customers: [Customer]!
+  customer(id: ID!): Customer
+
+  products: [Product]!
+  product(id: ID!): Product
+
+  bills: [Bill]!
+  bill(id: ID!): Bill
+}
+
+type Mutation {
+  createCustomer(
+    name: String!
+    email: String!
+    phone: String
+    address: String
+  ): Customer
+  updateCustomer(
+    id: ID!
+    name: String
+    email: String
+    phone: String
+    address: String
+  ): Customer
+  deleteCustomer(id: ID!): Boolean
+
+  createProduct(
+    name: String!
+    category: String!
+    price: Float!
+    stock: Int
+    description: String
+  ): Product
+  updateProduct(
+    id: ID!
+    name: String
+    category: String
+    price: Float
+    stock: Int
+    description: String
+  ): Product
+  deleteProduct(id: ID!): Boolean
+
+  # Input type for bill items
+  createBill(customer_id: ID!, items: [BillItemInput!]!): Bill
+}
+
+input BillItemInput {
+  product_id: ID!
+  quantity: Int!
+}

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Company Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>Pet Store Manager</h1>
+                <button id="theme-toggle" class="btn icon-btn" onclick="app.toggleTheme()" aria-label="Toggle Theme">
+                    <span class="icon">🌙</span>
+                </button>
+            </div>
+            <nav class="tabs">
+                <button class="tab-btn active" onclick="app.showSection('customers')">Customers</button>
+                <button class="tab-btn" onclick="app.showSection('products')">Products</button>
+                <button class="tab-btn" onclick="app.showSection('bills')">Bills</button>
+            </nav>
+        </header>
+
+        <main id="main-content">
+            <div id="customers-section" class="section">
+                <div class="section-header">
+                    <h2>Customers</h2>
+                    <button class="btn primary" onclick="app.openCustomerModal()">+ Add Customer</button>
+                </div>
+                <div class="table-container">
+                    <table id="customers-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="products-section" class="section" style="display:none">
+                <div class="section-header">
+                    <h2>Products</h2>
+                    <button class="btn primary" onclick="app.openProductModal()">+ Add Product</button>
+                </div>
+                <div class="table-container">
+                    <table id="products-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Description</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="bills-section" class="section" style="display:none">
+                <div class="section-header">
+                    <h2>Bills</h2>
+                    <button class="btn primary" onclick="app.openBillModal()">+ Create Bill</button>
+                </div>
+                <div class="table-container">
+                    <table id="bills-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer ID</th>
+                                <th>Date</th>
+                                <th>Total Amount</th>
+                                <th>Items</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="app.closeModal()">&times;</span>
+            <h2 id="modal-title">Modal Title</h2>
+            <form id="modal-form">
+                <!-- Form fields injected by JS -->
+            </form>
+            <div class="modal-footer">
+                <button class="btn secondary" onclick="app.closeModal()">Cancel</button>
+                <button class="btn primary" id="modal-save-btn">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
